@@ -1,0 +1,480 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Table Used: 
+===========
+	student (recid, rollno, fname, sname, surname, admitdate, birthdate, standard, sex)
+	CREATE TABLE parthrsstudents(
+  	studentid INTEGER AUTO_INCREMENT,
+      	rollno INTEGER(20) NOT NULL,
+  	fname VARCHAR(20) NOT NULL,
+  	sname VARCHAR(20) NOT NULL,
+  	surname VARCHAR(20) NOT NULL,
+      	admitdate DATE NOT NULL,
+      	birthdate DATE NOT NULL,
+      	standard INTEGER(20) NOT NULL,
+      	sex VARCHAR(6) CHECK (sex IN ('Male', 'Female')),
+  	flagdeleted BIT DEFAULT 0,
+  	endeffdate DATETIME,
+  	flagactive BIT DEFAULT 1,
+  	createdby BIGINT,
+  	createdon DATETIME,
+  	updatedby BIGINT,
+  	updatedon DATETIME,
+  	PRIMARY KEY(studentid)
+ 	);
+
+	INSERT INTO parthrsstudents(rollno, fname, sname, surname, admitdate, birthdate, standard, sex)
+	VALUES
+	(101, 'Parth', 'Rbhai', 'Shiyani', '2020-01-01', '2001-06-27', 12, 'Male'),
+	(102, 'Parshwa', 'Abhai', 'Shah', '2019-01-01', '2002-06-26', 11, 'Male'),
+	(103, 'Harsh', 'Bbhai', 'Modi', '2018-01-01', '2004-04-01', 10, 'Male'),
+	(104, 'Rutvik', 'Cbhai', 'Haripara', '2017-01-01', '2005-02-27', 12, 'Male'),
+	(105, 'Mayuri', 'Dbhai', 'Parmar', '2016-01-01', '2002-09-02', 11, 'Female');
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Write a query for following requirement:
+=======================================
+
+Q-1	Display Full Name of all the male students whose first name ends with "h" and are admitted between 1st January 2006 to 1st August 2006.
+
+	Eg:
+
+	|----------------------|
+	|FULL NAME	       |	
+	|----------------------|
+	|Kamlesh Rajubhai Patel|
+	------------------------
+
+	Here "Kamlesh" is the value of 'fname' column, "Rajubhai" of 'sname' and "Patel" of 'surname' column. And first character is in capital for fname, sname, 
+surname and each column value is separated by single space.
+
+
+SELECT CONCAT(fname, ' ', sname, ' ', surname) AS name
+FROM parthrsstudents
+WHERE fname LIKE '%h' AND admitdate BETWEEN '2006-01-01' AND '2006-08-01' AND sex = 'Male'
+ORDER BY name;
+=====================================================================================================================
+
+Tables Used:
+===========
+
+1) product (recid, mfrid, description, price, qtyonhand)
+
+2) orders (recid, customerid, orderdate, salesrepsid, productid, qty, amount)
+
+3) customer (recid, company, salesrepsid, creditlimit)
+
+4) salesreps (recid, name, officeid, designation, hiredate, manager, quota, sales, age)
+
+5) office (recid, city, region, manager, targetsales, actualsales)
+=====================================================================================================================
+-- 1) product (recid, mfrid, description, price, qtyonhand)
+		CREATE TABLE products(
+  	productid INTEGER AUTO_INCREMENT,
+    mfrid INTEGER(20) NOT NULL,
+  	description VARCHAR(20) NOT NULL,
+    price INTEGER(20) NOT NULL,
+    qtyonhand INTEGER(20) NOT NULL,
+  	flagdeleted BIT DEFAULT 0,
+  	endeffdate DATETIME,
+  	flagactive BIT DEFAULT 1,
+  	createdby BIGINT,
+  	createdon DATETIME,
+  	updatedby BIGINT,
+  	updatedon DATETIME,
+  	PRIMARY KEY(productid)
+ 	);
+
+INSERT INTO products(mfrid, description, price, qtyonhand)
+VALUES
+(101, 'Description1', 201, 301),
+(102, 'Description2', 202, 302),
+(103, 'Description3', 203, 303),
+(104, 'Description4', 204, 304),
+(105, 'Description5', 205, 305);
+
+DROP TABLE office;
+
+CREATE TABLE office(
+  	officeid INTEGER AUTO_INCREMENT,
+    city VARCHAR(20) NOT NULL,
+    region VARCHAR(20) NOT NULL,
+    manager VARCHAR(10) NOT NULL,
+    targetsales INTEGER(10) NOT NULL,
+    actualsales INTEGER(10) NOT NULL,
+  	flagdeleted BIT DEFAULT 0,
+  	endeffdate DATETIME,
+  	flagactive BIT DEFAULT 1,
+  	createdby BIGINT,
+  	createdon DATETIME,
+  	updatedby BIGINT,
+  	updatedon DATETIME,
+  	PRIMARY KEY(officeid)
+ 	);
+
+INSERT INTO office(city, region, manager, targetsales, actualsales)
+	VALUES
+	('city1', 'region1', 'manager1', 1000, 2000),
+	('city2', 'region2', 'manager2', 2000, 1000),
+	('city3', 'region3', 'manager3', 3000, 4000),
+	('city4', 'region4', 'manager4', 4000, 3000),
+	('city5', 'region5', 'manager5', 5000, 2000);
+
+UPDATE office AS o set o.city='rampur'
+WHERE o.officeid=3;
+
+CREATE TABLE salesreps(
+  	salesrepsid INTEGER AUTO_INCREMENT,
+      	name VARCHAR(20) NOT NULL,
+      	officeid INTEGER(20) NOT NULL,
+      	designation VARCHAR(20) NOT NULL,
+      	hiredate DATE NOT NULL,
+      	manager VARCHAR(10) NOT NULL,
+      	quota INTEGER(10) NOT NULL,
+      	sales INTEGER(10) NOT NULL,
+      	age INTEGER(3) NOT NULL,
+      	creditlimit INTEGER(20) NOT NULL,
+  	flagdeleted BIT DEFAULT 0,
+  	endeffdate DATETIME,
+  	flagactive BIT DEFAULT 1,
+  	createdby BIGINT,
+  	createdon DATETIME,
+  	updatedby BIGINT,
+  	updatedon DATETIME,
+  	PRIMARY KEY(salesrepsid),
+      	FOREIGN KEY(officeid) REFERENCES office(officeid)
+ 	);
+    
+    INSERT INTO  salesreps(name, officeid, designation, hiredate, manager, quota, sales, age, creditlimit)
+	VALUES
+	('name1', 1, 'designation1', '2022-01-01', 'manager1', 700, 10, 21, 5000),
+	('name2', 1, 'designation2', '2021-02-02', 'manager2', 200, 11, 22, 6000),
+	('name3', 1, 'designation3', '2020-03-03', 'manager3', 300, 12, 23, 7000),
+	('name4', 1, 'designation4', '2019-04-04', 'manager4', 600, 13, 24, 8000),
+	('name5', 2, 'designation5', '2018-05-05', 'manager5', 200, 14, 25, 9000),
+    ('name6', 2, 'designation6', '2021-02-02', 'manager2', 100, 11, 22, 6000),
+	('name7', 2, 'designation7', '2020-03-03', 'manager3', 600, 12, 23, 7000),
+	('name8', 2, 'designation8', '2019-04-04', 'manager4', 800, 13, 24, 8000),
+	('name9', 3, 'designation10', '2018-05-05', 'manager5', 300, 14, 25, 9000),
+    ('name10', 3, 'designation11', '2021-02-02', 'manager2', 200, 11, 22, 6000),
+	('name11', 3, 'designation12', '2020-03-03', 'manager3', 600, 12, 23, 7000),
+	('name12', 4, 'designation13', '2019-04-04', 'manager4', 800, 13, 24, 8000),
+	('name13', 4, 'designation14', '2018-05-05', 'manager5', 700, 14, 25, 9000),
+    ('name14', 5, 'designation15', '2021-02-02', 'manager2', 500, 11, 22, 6000),
+	('name15', 5, 'designation16', '2020-03-03', 'manager3', 200, 12, 23, 7000),
+	('name16', 4, 'designation17', '2019-04-04', 'manager4', 100, 13, 24, 8000),
+	('name17', 5, 'designation18', '2018-05-05', 'manager5', 300, 14, 25, 9000),
+    ('name18', 2, 'designation19', '2021-02-02', 'manager2', 200, 11, 22, 6000),
+	('name19', 3, 'designation20', '2020-03-03', 'manager3', 100, 12, 23, 7000),
+	('name20', 4, 'designation21', '2019-04-04', 'manager4', 300, 13, 24, 8000),
+	('name21', 5, 'designation22', '2018-05-05', 'manager5', 100, 14, 25, 9000);
+
+UPDATE salesreps AS o set o.hiredate='2005-01-30'
+WHERE o.salesrepsid=3;
+
+SELECT hiredate from salesreps
+
+CREATE TABLE customer(
+  	customerid INTEGER AUTO_INCREMENT,
+    company VARCHAR(20) NOT NULL,
+    salesrepsid INTEGER(20) NOT NULL,
+    creditlimit INTEGER(20) NOT NULL,
+  	flagdeleted BIT DEFAULT 0,
+  	endeffdate DATETIME,
+  	flagactive BIT DEFAULT 1,
+  	createdby BIGINT,
+  	createdon DATETIME,
+  	updatedby BIGINT,
+  	updatedon DATETIME,
+  	PRIMARY KEY(customerid),
+    FOREIGN KEY(salesrepsid) REFERENCES salesreps(salesrepsid)
+ 	);
+     drop TABLE customer;
+    INSERT INTO customer(company, salesrepsid, creditlimit)
+	VALUES
+	('company1', 1, 70000),
+	('company2', 1, 80000),
+	('company3', 2, 90000),
+	('company4', 2, 10000),
+	('company5', 3, 20000),
+    ('company1', 3, 70000),
+	('company2', 4, 80000),
+	('company3', 4, 90000),
+	('company4', 5, 10000),
+	('company5', 5, 20000),
+    ('company1', 6, 70000),
+	('company2', 7, 80000),
+	('company3', 7, 90000),
+	('company4', 8, 10000),
+	('company5', 9, 20000),
+    ('company1', 10, 70000),
+	('company2', 11, 80000),
+	('company3', 12, 90000),
+	('company4', 13, 10000),
+	('company5', 13, 20000),
+    ('company1', 13, 70000),
+	('company2', 14, 80000),
+	('company3', 14, 90000),
+	('company4', 15, 10000),
+	('company5', 15, 20000),
+    ('company1', 15, 70000),
+	('company2', 16, 80000),
+	('company3', 16, 90000),
+	('company4', 17, 10000),
+	('company5', 18, 20000),
+    ('company1', 19, 70000),
+	('company2', 19, 80000),
+	('company3', 20, 90000),
+	('company4', 20, 10000),
+	('company5', 20, 20000),
+    ('company1', 21, 70000),
+	('company2', 21, 80000),
+	('company3', 21, 90000),
+	('company4', 9, 10000),
+	('company5', 8, 20000),
+    ('company1', 7, 70000),
+	('company2', 21, 80000),
+	('company3', 19, 90000),
+	('company4', 19, 10000),
+	('company5', 18, 20000);
+
+CREATE TABLE orders(
+  	ordersid INTEGER AUTO_INCREMENT,
+  	customerid INTEGER(20) NOT NULL,
+  	orderdate DATE NOT NULL,
+  	salesrepsid  INTEGER(20) NOT NULL,
+ 	productid INTEGER(10) NOT NULL,
+  	qty INTEGER(20) NOT NULL,
+  	amount INTEGER(20) NOT NULL,
+  	flagdeleted BIT DEFAULT 0,
+  	endeffdate DATETIME,
+  	flagactive BIT DEFAULT 1,
+  	createdby BIGINT,
+  	createdon DATETIME,
+  	updatedby BIGINT,
+  	updatedon DATETIME,
+  	PRIMARY KEY(ordersid),
+  	FOREIGN KEY(customerid) REFERENCES customer(customerid),
+  	FOREIGN KEY(productid) REFERENCES products(productid),
+	FOREIGN KEY(salesrepsid) REFERENCES salesreps(salesrepsid)
+ 	);
+
+    INSERT INTO orders(customerid, orderdate, salesrepsid, productid, qty, amount)
+	VALUES
+	(2, '2015-01-01', 1, 5, 10, 12100),
+	(2, '2016-02-09', 2, 2, 11, 13100),
+	(3, '2017-03-08', 2, 3, 12, 14100),
+	(3, '2018-04-07', 1, 4, 13, 15100),
+	(3, '2019-05-06', 2, 5, 14, 16100),
+	(1, '2015-01-01', 3, 1, 10, 12100),
+	(1, '2016-02-09', 4, 2, 11, 13100),
+	(4, '2017-03-08', 4, 3, 12, 14100),
+	(4, '2018-04-07', 4, 4, 13, 15100),
+	(5, '2019-05-06', 5, 5, 14, 16100),
+    	(5, '2015-01-01', 5, 1, 10, 12100),
+	(6, '2016-02-09', 5, 2, 11, 13100),
+	(6, '2017-03-08', 6, 3, 12, 14100),
+	(7, '2018-04-07', 7, 4, 13, 15100),
+	(7, '2019-05-06', 6, 5, 14, 16100),
+	(8, '2015-01-01', 6, 1, 10, 12100),
+	(8, '2016-02-09', 7, 2, 11, 13100),
+	(9, '2017-03-08', 7, 3, 12, 14100),
+	(9, '2018-04-07', 8, 4, 13, 15100),
+	(10, '2019-05-06', 8, 5, 14, 16100),
+    	(10, '2015-01-01', 9, 1, 10, 12100),
+	(11, '2016-02-09', 9, 2, 11, 13100),
+	(12, '2017-03-08', 9, 3, 12, 14100),
+	(13, '2018-04-07', 10, 4, 13, 15100),
+	(14, '2019-05-06', 10, 5, 14, 16100),
+	(15, '2015-01-01', 10, 1, 10, 12100),
+	(16, '2016-02-09', 11, 2, 11, 13100),
+	(16, '2017-03-08', 12, 3, 12, 14100),
+	(16, '2018-04-07', 13, 4, 13, 15100),
+	(16, '2019-05-06', 15, 5, 14, 16100),
+    	(45, '2015-01-01', 13, 1, 10, 12100),
+	(45, '2016-02-09', 13, 2, 11, 13100),
+	(17, '2017-03-08', 14, 3, 12, 14100),
+	(17, '2018-04-07', 14, 4, 13, 15100),
+	(18, '2019-05-06', 15, 5, 14, 16100),
+	(18, '2015-01-01', 16, 1, 10, 12100),
+	(19, '2016-02-09', 16, 2, 11, 13100),
+	(19, '2017-03-08', 16, 3, 12, 14100),
+	(20, '2018-04-07', 17, 4, 13, 15100),
+	(21, '2019-05-06', 17, 5, 14, 16100),
+	(21, '2019-05-06', 17, 5, 14, 16100),
+	(21, '2015-01-01', 18, 1, 10, 12100),
+	(22, '2016-02-09', 18, 2, 11, 13100),
+	(22, '2017-03-08', 18, 3, 12, 14100),
+	(23, '2018-04-07', 19, 4, 13, 15100),
+	(24, '2019-05-06', 19, 5, 14, 16100),
+    	(24, '2015-01-01', 19, 1, 10, 12100),
+	(25, '2016-02-09', 20, 2, 11, 13100),
+	(25, '2017-03-08', 20, 3, 12, 14100),
+	(26, '2018-04-07', 20, 4, 13, 15100),
+	(26, '2019-05-06', 21, 5, 14, 16100),
+	(26, '2015-01-01', 21, 1, 10, 12100),
+	(27, '2016-02-09', 21, 2, 11, 13100),
+	(27, '2017-03-08', 21, 3, 12, 14100),
+	(28, '2018-04-07', 19, 4, 13, 15100),
+	(29, '2019-05-06', 19, 5, 14, 16100),
+	(29, '2019-05-06', 19, 5, 14, 16100),
+	(30, '2015-01-01', 19, 1, 10, 12100),
+	(30, '2016-02-09', 18, 2, 11, 13100),
+	(30, '2017-03-08', 18, 3, 12, 14100),
+	(31, '2018-04-07', 18, 4, 13, 15100),
+	(32, '2019-05-06', 18, 5, 14, 16100),
+    	(33, '2015-01-01', 18, 1, 10, 12100),
+	(34, '2016-02-09', 18, 2, 11, 13100),
+	(35, '2017-03-08', 17, 3, 12, 14100),
+	(36, '2018-04-07', 17, 4, 13, 15100),
+	(36, '2019-05-06', 17, 5, 14, 16100),
+	(36, '2015-01-01', 16, 1, 10, 12100),
+	(37, '2016-02-09', 16, 2, 11, 13100),
+	(37, '2017-03-08', 15, 3, 12, 14100),
+	(38, '2018-04-07', 15, 4, 13, 15100),
+	(38, '2019-05-06', 14, 5, 14, 16100),
+	(38, '2019-05-06', 14, 5, 14, 16100),
+	(39, '2015-01-01', 14, 1, 10, 12100),
+	(39, '2016-02-09', 13, 2, 11, 13100),
+	(39, '2017-03-08', 13, 3, 12, 14100),
+	(40, '2018-04-07', 12, 4, 13, 15100),
+	(40, '2019-05-06', 12, 5, 14, 16100),
+    	(41, '2015-01-01', 12, 1, 10, 12100),
+	(42, '2016-02-09', 11, 2, 11, 13100),
+	(42, '2017-03-08', 11, 3, 12, 14100),
+	(44, '2018-04-07', 10, 4, 13, 15100),
+	(41, '2019-05-06', 9, 5, 14, 16100),
+	(43, '2015-01-01', 1, 1, 10, 12100),
+	(43, '2016-02-09', 1, 2, 11, 13100),
+	(43, '2017-03-08', 1, 3, 12, 14100),
+	(42, '2018-04-07', 3, 4, 13, 15100),
+	(42, '2019-05-06', 3, 5, 14, 16100),
+	(45, '2019-05-06', 4, 5, 14, 16100),
+	(45, '2015-01-01', 5, 1, 10, 12100),
+	(30, '2016-02-09', 5, 2, 11, 13100),
+	(9, '2017-03-08', 6, 3, 12, 14100),
+	(16, '2018-04-07', 7, 4, 13, 15100),
+	(16, '2019-05-06', 7, 5, 14, 16100),
+    	(45, '2015-01-01', 7, 1, 10, 12100),
+	(45, '2016-02-09', 7, 2, 11, 13100),
+	(17, '2017-03-08', 8, 3, 12, 14100),
+	(17, '2018-04-07', 14, 4, 13, 15100),
+	(18, '2019-05-06', 15, 5, 14, 16100),
+	(18, '2015-01-01', 11, 1, 10, 12100),
+	(19, '2016-02-09', 12, 2, 11, 13100),
+	(19, '2017-03-08', 13, 3, 12, 14100),
+	(20, '2018-04-07', 14, 4, 13, 15100),
+	(21, '2019-05-06', 15, 5, 14, 16100),
+	(14, '2019-05-06', 15, 5, 14, 16100),
+	(15, '2015-01-01', 11, 1, 10, 12100),
+	(16, '2016-02-09', 12, 2, 11, 13100),
+	(16, '2017-03-08', 13, 3, 12, 14100),
+	(16, '2018-04-07', 14, 4, 13, 15100),
+	(16, '2019-05-06', 15, 5, 14, 16100),
+    	(45, '2015-01-01', 11, 1, 10, 12100),
+	(45, '2016-02-09', 12, 2, 11, 13100),
+	(17, '2017-03-08', 13, 3, 12, 14100),
+	(17, '2018-04-07', 14, 4, 13, 15100),
+	(18, '2019-05-06', 15, 5, 14, 16100),
+	(18, '2015-01-01', 11, 1, 10, 12100),
+	(19, '2016-02-09', 12, 2, 11, 13100),
+	(19, '2017-03-08', 13, 3, 12, 14100),
+	(20, '2018-04-07', 14, 4, 13, 15100),
+	(21, '2019-05-06', 15, 5, 14,16100);
+=====================================================================================================================
+
+Write queries for below requirements:
+=====================================
+
+Q-1	Find Name of all those sales representatives whose offices are in cities ending with 
+	"pur" and who have atleast 2 customers. The sales representative must be hired before 
+	1st January 2006 and his/her minimum age should be 21 yrs.
+	Display fields : Sales Rep. Name, Office City, No. of Customers, Hired on
+
+	SELECT sr.name FROM salesreps AS sr
+JOIN customer AS c
+ON sr.salesrepsid=c.salesrepsid
+JOIN office AS o
+ON o.officeid=sr.officeid
+WHERE o.city LIKE '%pur' AND sr.hiredate<'2006-01-01' AND sr.age>=21
+GROUP BY sr.name
+HAVING COUNT(c.customerid)>=2;
+=====================================================================================================================
+
+Q-2	Find following information for each customer:
+
+	Display fields : Company Name, Sales Rep. Name, Sales Rep. Office City, Company Credit
+
+	SELECT c.company AS compnayName, sr.name AS salesRepName, o.city AS salesRepOfficeCity, c.creditlimit AS companyCredit
+	FROM customer AS c
+	JOIN salesreps AS sr
+	ON c.salesrepsid = sr.salesrepsid
+	JOIN office AS o
+	ON o.officeid = sr.officeid
+	GROUP BY sr.name
+	ORDER BY sr.name;
+=====================================================================================================================
+
+Q-3	Find following information for each office:
+
+	Office city, Total Sales Rep., Total sale by all sales Rep.,
+	Target Sales, Actual Sales, Difference of Target and Actual Sales.
+
+	Display fields : Office City, No. of Sales Rep., Total Sale, Target Sales, Actual  Sales, Difference.
+
+	SELECT o.city AS city, COUNT(sr.salesrepsid) AS noOfSalesRep, SUM(sr.sales) AS totalSale, o.targetsales AS targetSales, o.actualsales AS actualSales, (o.actualsales - o.targetsales) AS difference
+	FROM office AS o
+	JOIN salesreps AS sr
+	ON o.officeid = sr.officeid
+	GROUP BY o.city
+	ORDER BY o.city;
+=====================================================================================================================
+
+Q-4	Find following information for each product:
+
+	Product description, Price, Quantity on hand, Total no. of 
+	orders for each product, Total quantity ordered, Total amount of the orders for each product.
+
+	Display fields : Description, Price, Quantity, Orders, Quantity, Total Amount
+
+	SELECT p.description, p.price, p.qtyonhand, COUNT(o.ordersid)
+	FROM products AS p
+	JOIN orders AS o
+	ON p.productid = o.productid
+	GROUP BY p.productid;
+=====================================================================================================================
+
+Q-5	Find order details for all the customers. There will be one row per customer displaying 	
+	total quantity ordered by them and the amount spent by each customer.
+	
+	Display fields : Company Name, Total Quantity Ordered, Total Amount
+
+	SELECT c.company AS companyName, SUM(o.qty) AS totalQuantityOrdered, SUM(o.amount) AS totalAmount
+	FROM customer AS c
+	JOIN orders AS o
+	ON c.customerid = o.customerid
+	GROUP BY c.company;
+=====================================================================================================================
+
+Q-6	Display all the sales representatives hired within the past five years from today along with thier Quota and 
+	Sales information.
+	
+	Display fields : Sales Rep. Name, Hired on, Quota, Sales
+	
+	SELECT name, hiredate, quota, sales
+	FROM salesreps AS sr
+	HAVING (YEAR(CURDATE()) - YEAR(hiredate)) < 5
+	ORDER BY name;
+=====================================================================================================================
+
+Q-7	Find total number of customers for all the products ordered. There will be one row per 	
+	order displaying product description, and total number of customers who have ordered 	that product.
+
+	Display fields : Product Description, Total No. of Customers who Ordered this Product.
+
+	SELECT p.description AS productDescription, 	COUNT(o.ordersid) AS totalCustomer
+	FROM products AS p
+	JOIN orders AS o
+	ON p.productid = o.productid
+	JOIN customer AS c
+	ON c.customerid = o.customerid
+	GROUP BY p.mfrid
+	ORDER BY p.mfrid;
