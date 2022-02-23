@@ -1,0 +1,457 @@
+Q1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>numeric1</title>
+    <script>
+        function check(){
+    
+            var text=document.getElementById('num').value;
+            console.log(text);
+            if(text==null || text==''){
+                document.getElementById('num').style.backgroundColor='#e27575';
+                document.getElementById('num').style.border='2px solid red';
+                document.getElementById('error').innerHTML='<p style="color: red;">NULL value not allow<p/>';
+            }
+            else if(isNaN(text)){
+                document.getElementById('num').style.backgroundColor='#e27575';
+                document.getElementById('num').style.border='2px solid red';
+                document.getElementById('error').innerHTML='<p style="color: red;">You Entered alphabetical string<p/>';
+            }
+            else{
+                document.getElementById('num').style.backgroundColor='#b6ef9e';
+                document.getElementById('num').style.border='2px solid green';
+                document.getElementById('error').innerHTML='<p style="color: green;">valided!<p/>';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1> numeric1 </h1>
+        <div class="bg">
+            <div class="input">
+                <input type="text" id="num" oninput="check()"/>
+                <span id="error"></span>
+            </div>
+            <div class="button">
+                <button >Submit</button>
+            </div>
+        </div>
+        <div class="btn">
+            <button class="button" id="bnext" onclick="window.location.href='nextDate.Html'">nextDate.Html</button>
+            <button class="button" id="bnext" onclick="window.location.href='numeric2.Html'">numeric2.Html</button>
+        </div>
+</body>
+</html>
+Q2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>numeric1</title>
+    <script>
+        function check(){
+    
+            var text=document.getElementById('num').value;
+            var res1=text.match(/\D/g);
+            console.log(text);
+            
+            
+            if(text==null || text==''){
+                document.getElementById('num').style.backgroundColor='#e27575';
+                document.getElementById('num').style.border='2px solid red';
+                document.getElementById('error').innerHTML='<p style="color: red;">NULL value not allow<p/>';
+            }
+            else if(res1!=null){
+                document.getElementById('num').style.backgroundColor='#e27575';
+                document.getElementById('num').style.border='2px solid red';
+                document.getElementById('error').innerHTML='<p style="color: red;">You Entered alphabetical string<p/>';
+            }
+            else{
+                document.getElementById('num').style.backgroundColor='#b6ef9e';
+                document.getElementById('num').style.border='2px solid green';
+                document.getElementById('error').innerHTML='<p style="color: green;">valided!<p/>';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1> numeric2 </h1>
+        <div class="bg">
+            <div class="input">
+                <input type="text" id="num" oninput="check()"/>
+                <span id="error"></span>
+            </div>
+            <div class="button">
+                <button >Submit</button>
+            </div>
+        </div>
+        <div class="btn">
+            <button class="button" onclick="window.location.href='numeric1.Html'">numeric1.Html</button>
+            <button class="button" onclick="window.location.href='submitfrombutton.Html'">submitfrombutton.Html</button>
+        </div>
+</body>
+</html>
+Q 3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>submitfrombutton</title>
+    <script>
+        function subm(){
+            var text=document.getElementById('num').value;
+            document.write(text);
+    
+            
+        }
+    </script>
+</head>
+<body>
+    <h1>Submit From Button</h1>
+        <div class="bg">
+            <div class="input">
+                <input type="text" id="num" />
+                <span id="error"></span>
+            </div>
+            <div class="button">
+                <button onclick="subm()">Submit</button>
+            </div>
+        </div>
+        <div class="btn">
+            <button class="button" onclick="window.location.href='numeric2.Html'">numeric2.Html</button>
+            <button class="button" onclick="window.location.href='singlespan.Html'">singlespan.Html</button>
+        </div>
+</body>
+</html>
+Q 4
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>singlespan</title>
+    
+    <script>
+        function changer(){
+           var val= document.querySelector('input[name="g1"]:checked').getAttribute('id');
+           document.getElementById('msg').innerHTML='You are selected'+ ' ' +val;
+            
+        }
+    </script>
+</head>
+<body>
+        <h1>singlespan</h1>
+        <div class="bg">
+            
+                <div>
+                <label class="labelcheck" for="php">PHP</label>
+                <input class="inputcheck" type="radio" oninput="changer()" class="g1" name="g1" id="php">
+                <label class="labelcheck"  for="aspnet">ASP.NET</label>
+                <input class="inputcheck" type="radio" oninput="changer()" class="g1"  name="g1" id="aspnet">
+                <label class="labelcheck"  for="asp">ASP</label>
+                <input class="inputcheck" type="radio" oninput="changer()" class="g1"  name="g1" id="asp">
+                <label class="labelcheck"  for="jsp">JSP</label>
+                <input class="inputcheck" type="radio" oninput="changer()" class="g1"  name="g1" id="jsp">
+                <label class="labelcheck"  for="perl">PERL</label>
+                <input class="inputcheck" type="radio" oninput="changer()" class="g1"  name="g1" id="perl">
+                <label class="labelcheck"  for="coldfusion">Cold Fusion</label>
+                <input class="inputcheck" type="radio" oninput="changer()" class="g1"  name="g1" id="coldfusion">
+                <label class="labelcheck"  for="other">Other</label>
+                <input class="inputcheck" type="radio" oninput="changer()" class="g1"  name="g1" id="other">
+            </div>
+            <div>
+                <span id="msg"></span>
+            </div>
+           
+        </div>
+        <div class="btn">
+            <button class="button" onclick="window.location.href='submitfrombutton.Html'">submitfrombutton.Html</button>
+            <button class="button" onclick="window.location.href='multiplespan.Html'">multiplespan.Html</button>
+        </div>
+</body>
+</html>
+
+Q5
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>singlespan</title>
+
+    <script>
+
+
+        function changer() {
+            var val = document.querySelector('input[name="g1"]:checked').getAttribute('id');
+            var mp = 's' + val;
+
+            document.getElementById(mp).innerHTML = 'You are selected' + ' ' + val;
+
+
+            if (document.getElementById('php').checked == false) {
+                document.getElementById('sphp').innerHTML = '';
+            }
+            if (document.getElementById('aspnet').checked == false) {
+                document.getElementById('saspnet').innerHTML = '';
+            }
+            if (document.getElementById('asp').checked == false) {
+                document.getElementById('sasp').innerHTML = '';
+            }
+            if (document.getElementById('jsp').checked == false) {
+                document.getElementById('sjsp').innerHTML = '';
+            }
+            if (document.getElementById('perl').checked == false) {
+                document.getElementById('sperl').innerHTML = '';
+            }
+            if (document.getElementById('coldfusion').checked == false) {
+                document.getElementById('scoldfusion').innerHTML = '';
+            }
+            if (document.getElementById('other').checked == false) {
+                document.getElementById('sother').innerHTML = '';
+            }
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Multiple Span</h1>
+    <div class="bg">
+
+        <div id="mcheck">
+            <div>
+                <label class="labelcheck" for="php">PHP</label>
+                <input class="inputcheck" type="radio" onclick="changer()" class="g1" name="g1" id="php">
+                <div>
+                    <span for="php" id="sphp"></span>
+                </div>
+            </div>
+            <div>
+                <label class="labelcheck" for="aspnet">ASP.NET</label>
+                <input class="inputcheck" type="radio" onclick="changer()" class="g1" name="g1" id="aspnet">
+                <div>
+                    <span name="msg" id="saspnet"></span>
+                </div>
+            </div>
+            <div>
+                <label class="labelcheck" for="asp">ASP</label>
+                <input class="inputcheck" type="radio" onclick="changer()" class="g1" name="g1" id="asp">
+                <div>
+                    <span name="msg" id="sasp"></span>
+                </div>
+            </div>
+            <div>
+                <label class="labelcheck" for="jsp">JSP</label>
+                <input class="inputcheck" type="radio" onclick="changer()" class="g1" name="g1" id="jsp">
+                <div>
+                    <span name="msg" id="sjsp"></span>
+                </div>
+            </div>
+            <div>
+                <label class="labelcheck" for="perl">PERL</label>
+                <input class="inputcheck" type="radio" onclick="changer()" class="g1" name="g1" id="perl">
+                <div>
+                    <span name="msg" id="sperl"></span>
+                </div>
+            </div>
+            <div>
+                <label class="labelcheck" for="coldfusion">Cold Fusion</label>
+                <input class="inputcheck" type="radio" onclick="changer()" class="g1" name="g1" id="coldfusion">
+                <div>
+                    <span name="msg" id="scoldfusion"></span>
+                </div>
+            </div>
+            <div>
+                <label class="labelcheck" for="other">Other</label>
+                <input class="inputcheck" type="radio" onclick="changer()" class="g1" name="g1" id="other">
+                <div>
+                    <span for="php" id="sother"></span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="btn">
+        <button class="button" onclick="window.location.href='singlespan.Html'">singlespan.Html</button>
+        <button class="button" onclick="window.location.href='multiplebutton.Html'">multiplebutton.Html</button>
+    </div>
+</body>
+
+</html>
+Q6
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>multiplebutoon</title>
+</head>
+<body>
+        <h1>Multiple Button</h1>
+        <div class="bg">
+            
+            <div class="button">
+                <button type="button" onclick="window.location.href='./numeric1.html'" id="num1" name="button">Submit1</button>
+            </div>
+            <div class="button">
+                <button type="button"  onclick="window.location.href='./numeric2.html'" id="num2" name="button">Submit2</button>
+            </div>
+        </div>
+        <div class="btn">
+            <button class="button" onclick="window.location.href='multiplespan.Html'">multiplespan.Html</button>
+            <button class="button" onclick="window.location.href='checkboxes.Html'">checkboxes.Html</button>
+        </div>
+</body>
+</html>
+Q 7
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>checkboxes</title>
+    
+    <script>
+        function changer() {
+            var val=document.querySelector('#checkall:checked');
+            var obje=document.getElementsByName('g1');
+            if(val!=null){
+                for (let i = 0; i < obje.length; i++) {
+                    obje[i].checked=true;
+                    
+                }
+            
+            }
+            else{
+                for (let i = 0; i < obje.length; i++) {
+                    obje[i].checked=false;
+                    
+                }
+            }
+
+        }
+        function check(){
+            var len=document.querySelectorAll('input[name="g1"]:checked').length;
+            var total=document.getElementsByName('g1').length;
+            if(len==total){
+                document.getElementById('checkall').checked=true;
+            }
+            else{
+                document.getElementById('checkall').checked=false;
+
+            }
+            
+        }
+    </script>
+    <style>
+        .con{
+            text-align: right;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Check Boxes</h1>
+    <div class="bg">
+        <div class="con">
+            <div>
+                <label class="labelcheckbox" for="usa">USA</label>
+                <input class="inputcheckbox" type="checkbox" oninput="check()" class="g1" name="g1" id="usa">
+            </div>
+            <div>
+                <label class="labelcheckbox" for="uk">UK</label>
+                <input class="inputcheckbox" type="checkbox" oninput="check()" class="g1" name="g1" id="uk">
+            </div>
+            <div>
+                <label class="labelcheckbox" for="india">India</label>
+                <input class="inputcheckbox" type="checkbox" oninput="check()" class="g1" name="g1" id="india">
+            </div>
+            <div>
+                <label class="labelcheckbox" for="asiapacific">Asia Pacific</label>
+                <input class="inputcheckbox" type="checkbox" oninput="check()" class="g1" name="g1" id="asiapacific">
+            </div>
+            <div>
+                <label class="labelcheckbox" for="australia">Australia</label>
+                <input class="inputcheckbox" type="checkbox" oninput="check()" class="g1" name="g1" id="australia">
+            </div>
+            <div>
+                <label class="labelcheckbox" for="middleeast">Middle East</label>
+                <input class="inputcheckbox" type="checkbox" oninput="check()" class="g1" name="g1" id="middleeast">
+            </div>
+            <div>
+                <label class="labelcheckbox" for="checkall">check All</label>
+                <input class="inputcheckbox" type="checkbox" oninput="changer()" class="g2" name="g2" id="checkall">
+            </div>
+        </div>
+    </div>
+    <div class="btn">
+        <button class="button" onclick="window.location.href='multiplebutton.Html'">multiplebutton.Html</button>
+        <button class="button" onclick="window.location.href='datevalidation.Html'">datevalidation.Html</button>
+    </div>
+    </body>
+    
+</html>
+Q 8
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>date validation</title>
+    <script>
+        function check(){
+            var date=document.getElementById('num').value;
+            var reg = /^\d{2}\/\d{2}\/\d{2}\$/;
+            var op=reg.test(date);
+            console.log(op);
+        if(op){
+            console.log('hi')
+        } 
+        else{
+            console.log('no');
+        }
+        }
+        
+    </script>
+</head>
+<body>
+    <h1> Date Validation</h1>
+        <div class="bg">
+            <div class="input">
+                <input type="datetime" id="num" oninput="check()"/>
+                <span id="error"></span>
+            </div>
+        </div>
+        <div class="btn">
+            <button class="button" onclick="window.location.href='checkboxes.Html'">checkboxes.Html</button>
+            <button class="button" onclick="window.location.href='datevalidation.Html'">datevalidation.Html</button>
+        </div>
+</body>
+</html>
