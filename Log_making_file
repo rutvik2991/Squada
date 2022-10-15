@@ -71,3 +71,39 @@ createFullApiLog: function (url, request, response, err) {
 
 
     },
+    getError: function (err, fileName, methodName, request) {
+        try {
+            var fileName = fileName + "Error"
+            var strErr = "";
+            if (typeof err.message !== 'undefined' && err.message !== null) {
+                strErr = err.message;
+            }
+            else if (typeof err.stack !== 'undefined' && err.stack !== null) {
+                strErr = err.stack;
+            } else {
+                strErr = err
+            }
+
+            var dt = new Date();
+            var resAPI = APICommonController.createFullApiLog("", request, "", strErr);
+
+            APICommonController.doLogs(resAPI, fileName, methodName);
+
+            //logger(fileName,methodName).error('Error: ', err )
+            if (typeof err.message !== 'undefined' && err.message !== null) {
+                return { date: [dt.toString()], APIError: [err.stack || err] };
+            }
+            else if (typeof err.stack !== 'undefined' && err.stack !== null) {
+                return { date: [dt.toString()], APIError: [err.stack || err] };
+            }
+            else {
+                return { date: [dt.toString()], APIError: [err] };
+            }
+
+        }
+        catch (err1) {
+            //logger(fileName,methodName).error('ErrorEX: ', err1 )
+            console.log(err1)
+        }
+
+    },
